@@ -1,0 +1,226 @@
+/* ── Gradient (shared: navbar + footer) ─────────── */
+.nav-gradient {
+    background: linear-gradient(90deg, #00c853, #ff4b2b);
+}
+
+/* ── Navbar-only rules ───────────────────────────── */
+nav.nav-gradient {
+    position: sticky;
+    top: 0;
+    z-index: 1050;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.30) !important;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.18);
+}
+
+/* ── Logo ─────────────────────────────────────── */
+.navbar-brand img {
+    border-radius: 10px;
+    transition: transform 0.35s ease, filter 0.35s ease;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+}
+
+
+/* ── Nav links ────────────────────────────────── */
+.nav-link {
+    color: white !important;
+    position: relative;
+    transition: transform 0.22s ease, color 0.22s ease !important;
+}
+
+/* Lift-up on hover */
+.nav-link:hover {
+    transform: translateY(-3px);
+    color: #fff !important;
+}
+
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 16px;
+    right: 16px;
+    height: 2px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link:hover::after {
+    transform: scaleX(1);
+}
+
+/* h5 inside the link — remove any default bottom margin */
+.nav-link h5 {
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Bootstrap icons inside nav links */
+.nav-link svg {
+    transition: transform 0.25s ease;
+}
+.nav-link:hover svg {
+    transform: scale(1.25);
+}
+
+/* ── Carousel (unchanged) ─────────────────────── */
+.carousel-slide-img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+}
+
+/* ══════════════════════════════════════════════
+   FORM UPGRADES — CSS only, no JSX changed
+══════════════════════════════════════════════ */
+
+/* Fieldset → polished card */
+fieldset {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 16px;
+    padding: 2rem 2.5rem 2.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.09), 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+fieldset:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.13), 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Legend → clean solid badge */
+legend {
+    float: none;
+    width: auto;
+    padding: 0.35rem 1.2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    background: #ff4b2b;
+    border-radius: 8px;
+    letter-spacing: 0.4px;
+    margin-bottom: 1.5rem;
+}
+
+/* Labels */
+.form-label {
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: #444;
+    margin-bottom: 0.35rem;
+    transition: color 0.2s ease;
+}
+
+/* Inputs & textareas — smooth focus animation */
+.form-control {
+    border: 1.5px solid #d1d5db;
+    border-radius: 10px;
+    padding: 0.55rem 0.9rem;
+    font-size: 0.95rem;
+    background-color: #fafafa;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.form-control:focus {
+    border-color: #00c853;
+    background-color: #fff;
+    box-shadow: 0 0 0 3.5px rgba(0, 200, 83, 0.18);
+    outline: none;
+}
+
+/* Label turns green when sibling input is focused */
+.mb-3:focus-within .form-label {
+    color: #00a846;
+}
+
+/* Textarea keeps same polish */
+textarea.form-control {
+    resize: vertical;
+    min-height: 110px;
+}
+
+/* ── Submit button ─────────────────────────────── */
+.btn-success {
+    position: relative;
+    overflow: hidden;
+    padding: 0.55rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 30px;
+    background: linear-gradient(90deg, #01923e, #00e676);
+    border: none;
+    box-shadow: 0 4px 16px rgba(0, 200, 83, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Shine sweep on hover */
+.btn-success::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -75%;
+    width: 50%; height: 100%;
+    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%);
+    transform: skewX(-20deg);
+    transition: left 0.45s ease;
+}
+
+.btn-success:hover::before {
+    left: 140%;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 200, 83, 0.5);
+}
+
+.btn-success:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(0, 200, 83, 0.3);
+}
+
+/* ══════════════════════════════════════════════
+   FOOTER UPGRADES — CSS only
+══════════════════════════════════════════════ */
+footer.nav-gradient {
+    border-top: 2px solid rgba(255, 255, 255, 0.22);
+    box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.18);
+    font-size: 0.82rem;
+    letter-spacing: 0.2px;
+}
+
+/* Three text blocks layout */
+footer .container > span {
+    opacity: 0.92;
+    transition: opacity 0.2s ease;
+    text-align: center;
+    padding: 0.15rem 0;
+}
+
+footer .container > span:hover {
+    opacity: 1;
+}
+
+/* Vertical dividers between spans on md+ screens */
+@media (min-width: 768px) {
+    footer .container > span:not(:last-child) {
+        border-left: 1px solid rgba(255, 255, 255, 0.3);
+        padding-left: 1.2rem;
+        margin-left: 1.2rem;
+    }
+}
+
+/* Author line slightly bolder */
+footer .container > span:last-child {
+    font-weight: 600;
+    opacity: 0.85;
+}
