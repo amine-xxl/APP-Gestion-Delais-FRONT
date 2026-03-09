@@ -1,43 +1,86 @@
-import { useEffect } from "react";
-import slides from "../data";
+import { useState, useEffect, useCallback } from 'react';
+import { slides } from '../data'
 
 export default function Acceuil() {
+  const [current, setCurrent] = useState(0);
+  const [prev, setPrev] = useState(null);
+  const [animation, setanimation] = useState(false);
+   // eslint-disable-next-line 
+  const [direction, setDirection] = useState('next');
 
-    useEffect(() => {
-        document.title = "SETAS";
-    }, []);
+  useEffect(() => {
+    document.title = "SETAS";
+  }, []);
 
-    return (
-        <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel">
-            <h4 className="alert alert-success text-center " >مرحبا بعودتك <span className="text-primary">السيدة فاطمة الزهراء</span></h4>
-            <div className="carousel-indicators">
-                {slides.map((_, index) => (
-                    <button key={index} type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to={index} className={index === 0 ? "active" : ""} aria-current={index === 0 ? "true" : undefined} aria-label={`Slide ${index + 1}`}></button>
-                ))}
-            </div>
+  const goTo = useCallback((index, dir = 'next') => {
+    if (animation || index === current) return;
+    setDirection(dir);
+    setPrev(current);
+    setanimation(true);
+    setCurrent(index);
+    setTimeout(() => {
+      setPrev(null);
+      setanimation(false);
+    }, 700);
+  }, [animation, current]);
 
-            <div className="carousel-inner">
-                {slides.map((slide, index) => (
-                    <div key={index} className={`carousel-item ${index === 0 ? "active" : ""}`}>
-                        <img src={`/${slide.img}`} className="carousel-slide-img" alt={slide.title} />
-                        <div className="carousel-caption d-none d-md-block">
-                            <h5>{slide.title}</h5>
-                            <p>{slide.text}</p>
-                        </div>
-                    </div>
-                ))}
-            </div>
+  const next = () => goTo((current + 1) % slides.length, 'next');
+  const back = () => goTo((current - 1 + slides.length) % slides.length, 'prev');
 
-            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span className="visually-hidden">Previous</span>
-            </button>
+  useEffect(() => {
+    const timer = setInterval(next, 5000);
+    return () => clearInterval(timer);
+     // eslint-disable-next-line 
+  }, [current, animation]);
 
-            <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                <span className="visually-hidden">Next</span>
-            </button>
+  return (
+    <div className="acceuil">
+      
 
+      <div className="setas-carousel">
+
+        {/* Welcome bar */}
+        <div className="setas-welcome">
+          مرحبا بعودتك <span>السيدة فاطمة الزهراء</span> — نظام تتبع المراسلات SETAS
         </div>
-    );
+
+        <div className="setas-frame" />
+
+        {/* Slide counter */}
+        <div className="setas-counter">
+          <strong>{String(current + 1).padStart(2, '0')}</strong> / {String(slides.length).padStart(2, '0')}
+        </div>
+
+        {slides.map((slide, i) => (
+          <div
+            key={i}
+            className={`setas-slide ${i === current ? 'active' : ''} ${i === prev ? 'prev-slide' : ''}`}
+          >
+            <img src={slide.img} alt={slide.title} />
+            <div className="setas-content">
+              <div className="setas-tag">{slide.tag}</div>
+              <h2 className="setas-title">{slide.title}</h2>
+              <div className="setas-divider" />
+              <p className="setas-text">{slide.text}</p>
+            </div>
+          </div>
+        ))}
+
+        <button className="setas-btn btn-prev" onClick={back} aria-label="السابق">&#8249;</button>
+        <button className="setas-btn btn-next" onClick={next} aria-label="التالي">&#8250;</button>
+
+        <div className="setas-dots">
+          {slides.map((e, i) => (
+            <button
+              key={i}
+              className={`setas-dot ${i === current ? 'active' : ''}`}
+              onClick={() => goTo(i, i > current ? 'next' : 'prev')}
+              aria-label={`Slide ${i + 1}`}
+            />
+          ))}
+        </div>
+
+      </div>
+    </div>
+  );
 }

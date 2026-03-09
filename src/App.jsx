@@ -10,12 +10,14 @@ export default function App() {
   return (
     <div className="d-flex flex-column min-vh-100">
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Acceuil />} />
-        <Route path="/Entries" element={<Entries />} />
-        <Route path="/Exits" element={<Exits />} />
-        <Route path="/Stats" element={<Stats />} />
-      </Routes>
+      <main className="flex-grow-1">
+        <Routes>
+          <Route path="/" element={<Acceuil />} />
+          <Route path="/Entries" element={<Entries />} />
+          <Route path="/Exits" element={<Exits />} />
+          <Route path="/Stats" element={<Stats />} />
+        </Routes>
+      </main>
       <Footer />
     </div>
   );

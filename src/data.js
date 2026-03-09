@@ -1,28 +1,32 @@
-const slides = [
-        {
-            img: "download.jpeg",
-            title: "فاطمة الفهرية",
-            text: "مدرسة فاطمة الفهرية"
-        },
-        {
-            img: "download (1).jpeg",
-            title: "Second slide",
-            text: "Some representative placeholder content."
-        },
-        {
-            img: "download (2).jpeg",
-            title: "Third slide",
-            text: "Some representative placeholder content."
-        },
-        {
-            img: "download (3).jpeg",
-            title: "Fourth slide",
-            text: "Some representative placeholder content."
-        },
-        {
-            img: "download (4).jpeg",
-            title: "Fourth slide",
-            text: "Some representative placeholder content."
-        }
-    ];
-export default slides;
+export const slides = [
+  {
+    img: "download.jpeg",
+    title: "فاطمة الفهرية",
+    text: "مؤسِّسة جامعة القرويين، أول جامعة في تاريخ البشرية",
+    tag: "تراث إسلامي"
+  },
+  {
+    img: "download (1).jpeg",
+    title: "الشريحة الثانية",
+    text: "نحو إدارة رقمية متطورة في خدمة الشأن الديني",
+    tag: "التحول الرقمي"
+  },
+  {
+    img: "download (2).jpeg",
+    title: "الشريحة الثالثة",
+    text: "تيسير الخدمات الإدارية وتحديث منظومة التواصل",
+    tag: "الخدمات"
+  },
+  {
+    img: "download (3).jpeg",
+    title: "الشريحة الرابعة",
+    text: "حفظ الذاكرة الوطنية والإرث الحضاري المغربي",
+    tag: "الإرث الوطني"
+  },
+  {
+    img: "download (4).jpeg",
+    title: "الشريحة الخامسة",
+    text: "تعزيز الشفافية والحوكمة في المؤسسات الدينية",
+    tag: "الحوكمة"
+  }
+];
