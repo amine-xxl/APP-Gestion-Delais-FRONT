@@ -47,7 +47,7 @@ export default function Acceuil() {
         <div className="setas-frame" />
 
         {/* Slide counter */}
-        <div className="setas-counter">
+        <div className="setas-counter">   
           <strong>{String(current + 1).padStart(2, '0')}</strong> / {String(slides.length).padStart(2, '0')}
         </div>
 

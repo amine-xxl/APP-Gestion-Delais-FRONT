@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 export default function Entries() {
     useEffect(() => {
@@ -37,9 +38,45 @@ export default function Entries() {
     const dateDiff = limiteRecu && dateReponse
         ? Math.round((new Date(dateReponse) - new Date(limiteRecu)) / (1000 * 60 * 60 * 24))
         : "";
+    const [loading, setLoading] = useState(false);
+
+    //Message Submition
+    const [toast, setToast] = useState({ show: false, success: true });
+
+    const showToast = (success) => {
+        setToast({ show: true, success });
+        setTimeout(() => setToast({ show: false, success: true }), 5000);
+    };
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            await axios.post('http://localhost:8000/api/courriers', {
+                n_garde: document.getElementById('n_garde').value,
+                date_garde: dateGarde,
+                sujet: document.getElementById('sujet').value,
+                date_recu: document.getElementById('date_recu').value,
+                limite_recu: limiteRecu,
+                delais_recu: delaisRecu,
+                reponse: document.getElementById('reponse').value,
+                n_reponse: document.getElementById('n_reponse').value,
+                date_reponse: dateReponse,
+                priority: priority,
+                status: 'pending',
+            });
+            showToast(true);
+        } catch (error) {
+            console.error(error);
+            showToast(false);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     return (
         <div className='container w-100 mx-auto' dir='rtl'>
-            <form action="">
+            <form action="" onSubmit={handleSubmit} >
                 <fieldset>
                     <legend>اضافة مراسلة جديدة</legend>
 
@@ -114,12 +151,30 @@ export default function Entries() {
                             </div>
                         </div>
                     </div>
-
-                    <input type="hidden" name="priority" value={priority} />
-                    <input type="hidden" name="status" value="pending" />
-                    <button type="submit" className="btn btn-success">حفظ</button>
-                </fieldset>
+                    <button type="submit" className="btn btn-success" disabled={loading}>
+                        {loading ? (
+                            <>
+                                <span className="spinner-grow spinner-grow-sm me-2 mx-2" role="status" aria-hidden="true"></span>
+                                جاري الحفظ...
+                            </>
+                        ) : 'حفظ'}
+                    </button></fieldset>
             </form>
+            {toast.show && (
+                <div style={{
+                    position: 'fixed',
+                    bottom: '1.5rem',
+                    right: '1.5rem',
+                    zIndex: 9999,
+                    minWidth: '280px',
+                    animation: 'fadeIn 0.3s ease'
+                }}>
+                    <div className={`alert ${toast.success ? 'alert-success' : 'alert-danger'} shadow-lg d-flex align-items-center gap-2 mb-0`}>
+                        <span style={{ fontSize: '1.3rem' }}>{toast.success ? '✅' : '❌'}</span>
+                        <span>{toast.success ? 'تم الحفظ بنجاح' : 'حدث خطأ أثناء الحفظ'}</span>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
