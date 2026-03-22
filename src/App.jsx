@@ -5,6 +5,7 @@ import Entries from "./components/Entries";
 import Exits from "./components/Exits";
 import Stats from "./components/Stats";
 import Footer from "./components/Footer";
+import Edit from "./components/Edit";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="/Entries" element={<Entries />} />
           <Route path="/Exits" element={<Exits />} />
           <Route path="/Stats" element={<Stats />} />
+          <Route path="/edit/:id" element={<Edit />} />
         </Routes>
       </main>
       <Footer />

@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useDispatch } from 'react-redux';
+import { addCourrier } from '../store/courrierSlice';
 
 export default function Entries() {
+    const dispatch = useDispatch();
     useEffect(() => {
         document.title = "SETAS | الـمـدخـلات";
     }, []);
@@ -48,32 +51,33 @@ export default function Entries() {
         setTimeout(() => setToast({ show: false, success: true }), 5000);
     };
 
-    async function handleSubmit(e) {
-        e.preventDefault();
-        setLoading(true);
-        try {
-            await axios.post('http://localhost:8000/api/courriers', {
-                n_garde: document.getElementById('n_garde').value,
-                date_garde: dateGarde,
-                sujet: document.getElementById('sujet').value,
-                date_recu: document.getElementById('date_recu').value,
-                limite_recu: limiteRecu,
-                delais_recu: delaisRecu,
-                reponse: document.getElementById('reponse').value,
-                n_reponse: document.getElementById('n_reponse').value,
-                date_reponse: dateReponse,
-                priority: priority,
-                status: 'pending',
-            });
-            showToast(true);
-        } catch (error) {
-            console.error(error);
-            showToast(false);
-        } finally {
-            setLoading(false);
-        }
+    // Ajout Handler
+async function handleSubmit(e) {
+    e.preventDefault();
+    setLoading(true);
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/courriers`, {
+            n_garde: document.getElementById('n_garde').value,
+            date_garde: dateGarde,
+            sujet: document.getElementById('sujet').value,
+            date_recu: document.getElementById('date_recu').value,
+            limite_recu: limiteRecu,
+            delais_recu: delaisRecu,
+            reponse: document.getElementById('reponse').value,
+            n_reponse: document.getElementById('n_reponse').value,
+            date_reponse: dateReponse,
+            priority: priority,
+            status: 'pending',
+        });
+        dispatch(addCourrier(res.data));
+        showToast(true);
+    } catch (error) {
+        console.error(error);
+        showToast(false);
+    } finally {
+        setLoading(false);
     }
-
+}
     return (
         <div className='container w-100 mx-auto' dir='rtl'>
             <form action="" onSubmit={handleSubmit} >
