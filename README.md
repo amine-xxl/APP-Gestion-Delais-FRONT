@@ -1,71 +1,94 @@
-# Getting Started with Create React App
-This project was created by - Mohammed-Amine Rhazi - © 2026 Application de Suivi des Délais
+# SETAS — Frontend 🇲🇦
+### Système de Suivi et de Traitement des Affaires — المندوبية الإقليمية للشؤون الإسلامية بفاس
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+## 📌 About
+SETAS is a correspondence management system built for the **Ministère des Habous et des Affaires Islamiques** — Fès regional office.  
+It allows the director to track, manage, and respond to incoming correspondence with full deadline management and automated reminders.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🚀 Tech Stack
+| Technology | Usage |
+|------------|-------|
+| React 18 | Frontend framework |
+| Redux Toolkit | State management |
+| Axios | API communication |
+| Bootstrap 5 | UI styling |
+| React Router v6 | Navigation |
+| Docxtemplater | Word document generation |
+| React Bootstrap Icons | Icons |
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📁 Project Structure
+```
+src/
+├── components/
+│   ├── Acceuil.jsx      # Home page with carousel + reminder banner
+│   ├── Entries.jsx      # Add new correspondence form
+│   ├── Exits.jsx        # Correspondence table with edit/delete
+│   ├── Edit.jsx         # Edit correspondence page
+│   ├── Stats.jsx        # Statistics dashboard
+│   ├── Navbar.jsx       # Navigation bar
+│   └── Footer.jsx       # Footer
+├── store/
+│   ├── store.js         # Redux store configuration
+│   └── courrierSlice.js # Redux slice (CRUD actions)
+├── hooks/
+│   └── useReminders.js  # Desktop notification hook
+├── data.js              # Carousel slides data
+├── App.jsx              # Main app component
+└── index.js             # Entry point
+```
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## ⚙️ Installation
 
-### `npm run build`
+```bash
+# Clone the repository
+git clone https://github.com/your-username/APP-Gestion-Delais-FRONT.git
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Navigate to the project
+cd APP-Gestion-Delais-FRONT
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Install dependencies
+npm install
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Create environment file
+echo "REACT_APP_BACKEND_URL=http://localhost:8000" > .env
 
-### `npm run eject`
+# Start the development server
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🌍 Environment Variables
+Create a `.env` file in the root:
+```env
+REACT_APP_BACKEND_URL=http://localhost:8000
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## ✨ Features
+- 📥 **البريد الوارد** — Add incoming correspondence with auto-calculated deadlines
+- 📤 **المخرجات** — View, edit, delete all correspondence
+- 📊 **الإحصائيات** — Statistics dashboard with monthly filter
+- 🖨️ **طباعة** — Generate filled Word documents from templates
+- 🔔 **Desktop Notifications** — Browser notifications for upcoming deadlines
+- ⚠️ **Reminder Banner** — Red alert on homepage for deadlines within 5 days
+- 🌙 **RTL Support** — Full Arabic right-to-left interface
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 👨‍💻 Author
+**Mohammed-Amine Rhazi**  
+- **My Email:** mohammedaminerhazi@gmail.com
+- **My GitHub Profile:** https://github.com/amine-xxl
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Réalisé pour le Chef de Service de l'Enseignement Traditionnel et des Affaires Sociales  
+© 2026 Application de Suivi des Délais — SETAS
