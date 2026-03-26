@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCourriers, deleteCourrier, setLoading } from '../store/courrierSlice';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { PencilSquare, Trash3Fill } from 'react-bootstrap-icons';
+import { Inbox, PencilSquare, Trash3Fill } from 'react-bootstrap-icons';
 
 export default function Exits() {
   const dispatch = useDispatch();
@@ -36,6 +36,7 @@ export default function Exits() {
   };
 
   return (
+    <div className='page-enter'>
     <div className='container w-100 mx-auto mt-3' dir='rtl'>
       <h4 className='mb-3'>قائمة المراسلات</h4>
       {loading ? (
@@ -57,24 +58,36 @@ export default function Exits() {
             </tr>
           </thead>
           <tbody>
-            {courriers.map((c, i) => (
-              <tr key={c.id}>
-                <td>{i + 1}</td>
-                <td className='text-center' dir='ltr'>{c.n_garde}</td>
-                <td>{c.date_garde}</td>
-                <td className='text-center' dir='ltr'>{c.n_reponse}</td>
-                <td className='text-center'>{c.sujet}</td>
-                <td>{c.date_recu}</td>
-                <td>{c.delais_recu} يوم</td>
-                <td>
-                  <button className='btn btn-sm btn-primary mx-1' onClick={() => navigate(`/edit/${c.id}`)}><PencilSquare /> </button>
-                  <button className='btn btn-sm btn-danger' onClick={() => handleDelete(c.id)}><Trash3Fill /></button>
+            {courriers.length === 0 ? (
+              <tr>
+                <td colSpan={8}>
+                  <div className="empty-state">
+                    <div className="empty-state-icon"><Inbox /></div>
+                    <p className="empty-state-msg">لا توجد مراسلات</p>
+                  </div>
                 </td>
               </tr>
-            ))}
+            ) : (
+              courriers.map((c, i) => (
+                <tr key={c.id}>
+                  <td>{i + 1}</td>
+                  <td className='text-center' dir='ltr'>{c.n_garde}</td>
+                  <td>{c.date_garde}</td>
+                  <td className='text-center' dir='ltr'>{c.n_reponse}</td>
+                  <td className='text-center'>{c.sujet}</td>
+                  <td>{c.date_recu}</td>
+                  <td>{c.delais_recu} يوم</td>
+                  <td>
+                    <button className='btn btn-sm btn-primary mx-1' onClick={() => navigate(`/edit/${c.id}`)}><PencilSquare /> </button>
+                    <button className='btn btn-sm btn-danger' onClick={() => handleDelete(c.id)}><Trash3Fill /></button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       )}
+    </div>
     </div>
   );
 }

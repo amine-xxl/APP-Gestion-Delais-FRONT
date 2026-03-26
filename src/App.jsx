@@ -11,7 +11,7 @@ export default function App() {
   return (
     <div className="d-flex flex-column min-vh-100">
       <Navbar />
-      <main className="flex-grow-1">
+       <main className="flex-grow-1">
         <Routes>
           <Route path="/" element={<Acceuil />} />
           <Route path="/Entries" element={<Entries />} />
@@ -19,7 +19,7 @@ export default function App() {
           <Route path="/Stats" element={<Stats />} />
           <Route path="/edit/:id" element={<Edit />} />
         </Routes>
-      </main>
+       </main>
       <Footer />
     </div>
   );

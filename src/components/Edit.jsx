@@ -3,6 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateCourrier } from '../store/courrierSlice';
 import axios from 'axios';
+import Docxtemplater from 'docxtemplater';
+import { saveAs } from 'file-saver';
+import PizZip from 'pizzip';
 
 export default function Edit() {
     useEffect(() => { document.title = "SETAS | تعديل"; }, []);
@@ -60,6 +63,38 @@ export default function Edit() {
         }
     };
 
+    //Print Handler Fuction
+    const handlePrint = async () => {
+        try {
+            const response = await fetch('/template.docx');
+            const arrayBuffer = await response.arrayBuffer();
+            const zip = new PizZip(arrayBuffer);
+            const doc = new Docxtemplater(zip, {
+                paragraphLoop: true,
+                linebreaks: true,
+                delimiters: {
+                    start: '{',
+                    end: '}'
+                }
+            });
+
+            doc.render({
+                n_garde: `\u200E${form.n_garde || ''}`,
+                date_garde: `\u200E${form.date_garde || ''}`,
+                sujet: form.sujet || '',
+                reponse: form.reponse || '',
+                n_reponse: `\u200E${form.n_reponse || ''}`,
+            });
+            // \u200E is an invisible Left-to-Right Mark character — it forces Word to display the text in LTR direction.
+
+            const output = doc.getZip().generate({ type: 'blob' });
+            saveAs(output, `مراسلة.docx`);
+        } catch (err) {
+            console.error(err);
+            alert('حدث خطأ أثناء الطباعة ❌');
+        }
+    };
+
     if (loading) return (
         <div className="text-center mt-5">
             <span className="spinner-grow text-success" role="status"></span>
@@ -67,6 +102,7 @@ export default function Edit() {
     );
 
     return (
+        <div className='page-enter'>
         <div className='edit-page container w-100 mx-auto' dir='rtl'>
             <form onSubmit={handleSubmit}>
                 <fieldset>
@@ -116,16 +152,6 @@ export default function Edit() {
                                     value={form.date_recu} onChange={handle} required />
                             </div>
                         </div>
-                        <div className="col-md-6">
-                            <div className="mb-3">
-                                <label className="form-label">الحالة</label>
-                                <select name="status" className="form-control" value={form.status} onChange={handle}>
-                                    <option value="pending">قيد الانتظار</option>
-                                    <option value="answered">تمت الإجابة</option>
-                                    <option value="archived">مؤرشف</option>
-                                </select>
-                            </div>
-                        </div>
                     </div>
                     <div className="row">
                         <div className="mb-3">
@@ -154,12 +180,14 @@ export default function Edit() {
                         <button type="submit" className="btn btn-success" disabled={saving}>
                             {saving ? <><span className="spinner-grow spinner-grow-sm mx-2"></span> جاري الحفظ... </> : 'حفظ التعديلات'}
                         </button>
+                        <button type="button" className="btn btn-info mx-2" onClick={handlePrint}>طباعة</button>
                         <button type="button" className="btn btn-danger" onClick={() => navigate('/Exits')}>
                             إلغاء
                         </button>
                     </div>
                 </fieldset>
             </form>
+        </div>
         </div>
     );
 }

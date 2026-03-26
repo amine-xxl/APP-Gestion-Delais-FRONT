@@ -113,6 +113,7 @@ export default function Entries() {
         }
     };
     return (
+        <div className='page-enter'>
         <div className='container w-100 mx-auto' dir='rtl'>
             <form action="" onSubmit={handleSubmit} >
                 <fieldset>
@@ -215,6 +216,7 @@ export default function Entries() {
                     </div>
                 </div>
             )}
+        </div>
         </div>
     )
 }

@@ -1,3 +1,5 @@
+import { Claude } from "react-bootstrap-icons";
+
 export default function Footer() {
     return (
         <footer className="text-light py-3 mt-4 nav-gradient ">
@@ -9,7 +11,7 @@ export default function Footer() {
                     Dediée Pour Chef de Service de l'Enseignement Traditionnel et des Affaires Sociales
                 </span>
                 <span>
-                    Realisé par : Mohammed-Amine Rhazi
+                    Realisé par : Mohammed-Amine Rhazi <Claude />
                 </span>
             </div>
         </footer>

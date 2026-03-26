@@ -34,6 +34,7 @@ export default function Acceuil() {
   }, [current, animation]);
 
   return (
+    <div className="page-enter">
     <div className="acceuil">
       
 
@@ -81,6 +82,7 @@ export default function Acceuil() {
         </div>
 
       </div>
+    </div>
     </div>
   );
 }
