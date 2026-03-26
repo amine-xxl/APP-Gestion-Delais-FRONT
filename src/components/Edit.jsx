@@ -20,24 +20,27 @@ export default function Edit() {
     const [saving, setSaving] = useState(false);
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/api/courriers/${id}`)
+        axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/courriers/${id}`)
             .then(res => {
                 const d = res.data;
                 setForm({
                     n_garde: d.n_garde || '',
-                    date_garde: d.date_garde?.split('T')[0] || '',
+                    date_garde: d.date_garde || '',
                     sujet: d.sujet || '',
-                    date_recu: d.date_recu?.split('T')[0] || '',
-                    limite_recu: d.limite_recu?.split('T')[0] || '',
+                    date_recu: d.date_recu || '',
+                    limite_recu: d.limite_recu || '',
                     delais_recu: d.delais_recu || '',
                     reponse: d.reponse || '',
                     n_reponse: d.n_reponse || '',
-                    date_reponse: d.date_reponse?.split('T')[0] || '',
+                    date_reponse: d.date_reponse || '',
                     status: d.status || 'pending'
                 });
                 setLoading(false);
             })
-            .catch(err => { console.error(err); setLoading(false); });
+            .catch(err => {
+                console.error(err);
+                setLoading(false);
+            });
     }, [id]);
 
     const handle = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -46,7 +49,7 @@ export default function Edit() {
         e.preventDefault();
         setSaving(true);
         try {
-            const res = await axios.put(`${process.env.REACT_APP_API_URL}/api/courriers/${id}`, form);
+            const res = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/courriers/${id}`, form);
             dispatch(updateCourrier(res.data));
             navigate('/Exits');
         } catch (err) {

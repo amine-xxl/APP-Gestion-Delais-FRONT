@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useDispatch } from 'react-redux';
 import { addCourrier } from '../store/courrierSlice';
+import PizZip from 'pizzip';
+import Docxtemplater from 'docxtemplater';
+import { saveAs } from 'file-saver';
 
 export default function Entries() {
     const dispatch = useDispatch();
@@ -52,32 +55,63 @@ export default function Entries() {
     };
 
     // Ajout Handler
-async function handleSubmit(e) {
-    e.preventDefault();
-    setLoading(true);
-    try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/courriers`, {
-            n_garde: document.getElementById('n_garde').value,
-            date_garde: dateGarde,
-            sujet: document.getElementById('sujet').value,
-            date_recu: document.getElementById('date_recu').value,
-            limite_recu: limiteRecu,
-            delais_recu: delaisRecu,
-            reponse: document.getElementById('reponse').value,
-            n_reponse: document.getElementById('n_reponse').value,
-            date_reponse: dateReponse,
-            priority: priority,
-            status: 'pending',
-        });
-        dispatch(addCourrier(res.data));
-        showToast(true);
-    } catch (error) {
-        console.error(error);
-        showToast(false);
-    } finally {
-        setLoading(false);
+    async function handleSubmit(e) {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/courriers`, {
+                n_garde: document.getElementById('n_garde').value,
+                date_garde: dateGarde,
+                sujet: document.getElementById('sujet').value,
+                date_recu: document.getElementById('date_recu').value,
+                limite_recu: limiteRecu,
+                delais_recu: delaisRecu,
+                reponse: document.getElementById('reponse').value,
+                n_reponse: document.getElementById('n_reponse').value,
+                date_reponse: dateReponse,
+                priority: priority,
+                status: 'pending',
+            });
+            dispatch(addCourrier(res.data));
+            showToast(true);
+        } catch (error) {
+            console.error(error);
+            showToast(false);
+        } finally {
+            setLoading(false);
+        }
     }
-}
+    //Print Handler Fuction
+    const handlePrint = async () => {
+        try {
+            const response = await fetch('/template.docx');
+            const arrayBuffer = await response.arrayBuffer();
+            const zip = new PizZip(arrayBuffer);
+            const doc = new Docxtemplater(zip, {
+                paragraphLoop: true,
+                linebreaks: true,
+                delimiters: {
+                    start: '{',
+                    end: '}'
+                }
+            });
+
+            doc.render({
+                n_garde: `\u200E${document.getElementById('n_garde').value || ''}`,
+                date_garde: `\u200E${dateGarde || ''}`,
+                sujet: document.getElementById('sujet').value || '',
+                reponse: document.getElementById('reponse').value || '',
+                n_reponse: `\u200E${document.getElementById('n_reponse').value || ''}`,
+            });
+            // \u200E is an invisible Left-to-Right Mark character — it forces Word to display the text in LTR direction.
+
+            const output = doc.getZip().generate({ type: 'blob' });
+            saveAs(output, `مراسلة.docx`);
+        } catch (err) {
+            console.error(err);
+            alert('حدث خطأ أثناء الطباعة ❌');
+        }
+    };
     return (
         <div className='container w-100 mx-auto' dir='rtl'>
             <form action="" onSubmit={handleSubmit} >
@@ -162,7 +196,9 @@ async function handleSubmit(e) {
                                 جاري الحفظ...
                             </>
                         ) : 'حفظ'}
-                    </button></fieldset>
+                    </button>
+                    <button type="button" className="btn btn-info mx-2" onClick={handlePrint}>طباعة</button>
+                </fieldset>
             </form>
             {toast.show && (
                 <div style={{

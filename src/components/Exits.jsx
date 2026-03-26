@@ -12,7 +12,7 @@ export default function Exits() {
   useEffect(() => {
     document.title = "SETAS | الـمـخـرجـات";
     dispatch(setLoading(true));
-    axios.get(`${process.env.REACT_APP_API_URL}/api/courriers`)
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/courriers`)
       .then(res => {
         dispatch(setCourriers(res.data));
         dispatch(setLoading(false));
@@ -27,7 +27,7 @@ export default function Exits() {
   const handleDelete = async (id) => {
     if (!window.confirm('هل أنت متأكد من حذف هذه المراسلة؟')) return;
     try {
-      await axios.delete(`${process.env.REACT_APP_API_URL}/api/courriers/${id}`);
+      await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/courriers/${id}`);
       dispatch(deleteCourrier(id));
     } catch (err) {
       console.error(err);
@@ -49,6 +49,7 @@ export default function Exits() {
               <th>#</th>
               <th>رقم المراسلة</th>
               <th>تاريخها</th>
+              <th>رقم الجواب</th>
               <th>الموضوع</th>
               <th>تاريخ الاستلام</th>
               <th>أجل التسليم</th>
@@ -59,9 +60,10 @@ export default function Exits() {
             {courriers.map((c, i) => (
               <tr key={c.id}>
                 <td>{i + 1}</td>
-                <td className='text-start' dir='ltr'>{c.n_garde}</td>
+                <td className='text-center' dir='ltr'>{c.n_garde}</td>
                 <td>{c.date_garde}</td>
-                <td className='text-start'>{c.sujet}</td>
+                <td className='text-center' dir='ltr'>{c.n_reponse}</td>
+                <td className='text-center'>{c.sujet}</td>
                 <td>{c.date_recu}</td>
                 <td>{c.delais_recu} يوم</td>
                 <td>

@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 
 export default function Stats() {
      useEffect(() => {
-    document.title = "SETAS | Ihsaiyat";
+    document.title = "SETAS | الإحصائيات";
   }, []);
   return (
     <div>
-        <h1>Ihsaiyat</h1>
+        <h1>الإحصائيات</h1>
     </div>
   )
 }

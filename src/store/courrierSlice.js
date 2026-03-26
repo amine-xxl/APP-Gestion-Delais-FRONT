@@ -14,10 +14,10 @@ const courrierSlice = createSlice({
       state.courriers.push(action.payload);
     },
     deleteCourrier: (state, action) => {
-      state.courriers = state.courriers.filter((c) => c.id !== action.payload);
+      state.courriers = state.courriers.filter((e) => e.id !== action.payload);
     },
     updateCourrier: (state, action) => {
-      const i = state.courriers.findIndex((c) => c.id === action.payload.id);
+      const i = state.courriers.findIndex((e) => e.id === action.payload.id);
       if (i !== -1) state.courriers[i] = action.payload;
     },
     setLoading: (state, action) => {
@@ -26,11 +26,5 @@ const courrierSlice = createSlice({
   },
 });
 
-export const {
-  setCourriers,
-  addCourrier,
-  deleteCourrier,
-  updateCourrier,
-  setLoading,
-} = courrierSlice.actions;
+export const { setCourriers, addCourrier, deleteCourrier, updateCourrier, setLoading,} = courrierSlice.actions;
 export default courrierSlice.reducer;

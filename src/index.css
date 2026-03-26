@@ -195,7 +195,58 @@ textarea.form-control {
   box-shadow: 0 3px 10px rgba(0, 200, 83, 0.3);
 }
 
-/* ── Cancel button on Edit page only (mirrors btn-success) ── */
+/* ── Print button ── */
+
+.btn-info {
+  position: relative;
+  color: #fff !important;
+  overflow: hidden;
+  padding: 0.55rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border-radius: 30px;
+  background: linear-gradient(90deg, #015d92, #00e6e6);
+  border: none;
+  box-shadow: 0 4px 16px rgba(0, 200, 200, 0.4);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* ── Shine sweep on hover ── */
+.btn-info::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 70%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.45s ease;
+}
+
+.btn-info:hover::before {
+  left: 140%;
+}
+
+.btn-info:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 187, 200, 0.5);
+}
+
+.btn-info:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(0, 187, 200, 0.3);
+}
+
+/* ── Cancel button on Edit page only ── */
 .edit-page .btn-danger {
   position: relative;
   overflow: hidden;
@@ -242,7 +293,6 @@ textarea.form-control {
   transform: translateY(0);
   box-shadow: 0 3px 10px rgba(255, 23, 68, 0.3);
 }
-
 
 /* ── FOOTER ── */
 footer.nav-gradient {
